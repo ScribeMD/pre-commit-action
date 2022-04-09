@@ -1,0 +1,39 @@
+name: Test
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_call:
+    secrets:
+      SLACK_BOT_TOKEN:
+        description: >
+          The Slack API bot token for your custom app. It will be used to report
+          the result of the workflow. The token must have the chat:write scope.
+        required: true
+      SLACK_ACTIONS_CHANNEL_ID:
+        description: >
+          The ID of the Slack channel to report the workflow result to. Your bot
+          should be a member. Secondary-click on the channel in Slack, and
+          select "Copy link" to copy a URL containing the channel ID.
+        required: true
+jobs:
+  test:
+    name: Run Pre-commit Hooks
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repository.
+        uses: actions/checkout@v3.0.1
+        with:
+          repository: ScribeMD/pre-commit-action
+      - name: Install and run pre-commit hooks.
+        uses: ./
+      - name: Send Slack notification with job status.
+        if: always()
+        uses: ScribeMD/slack-templates@0.2.2
+        with:
+          bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel-id: ${{ secrets.SLACK_ACTIONS_CHANNEL_ID }}
+          template: result
