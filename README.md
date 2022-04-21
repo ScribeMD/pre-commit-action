@@ -41,7 +41,7 @@ protect the default branch.
 
 ```yaml
 - name: Install and run pre-commit hooks.
-  uses: ScribeMD/pre-commit-action@0.1.1
+  uses: ScribeMD/pre-commit-action@0.1.2
 ```
 
 ## Supported Runners
