@@ -55,20 +55,25 @@ runs:
           ) }}
     - name: Use Docker in rootless mode.
       uses: ScribeMD/rootless-docker@0.1.1
-    - name: Get Docker root directory.
-      id: docker-info
-      run: |
-        docker_root_dir="$(docker info --format "{{ .DockerRootDir }}")"
-        echo "::set-output name=root-dir::$docker_root_dir"
-      shell: bash
     - name: Cache Docker images.
+      id: docker-cache
       uses: actions/cache@v3.0.2
       with:
-        path: ${{ steps.docker-info.outputs.root-dir }}
+        path: ~/.docker-images.tar
         key: docker-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
+    - name: Load Docker images.
+      if: steps.docker-cache.outputs.cache-hit == 'true'
+      run: docker load --input ~/.docker-images.tar
+      shell: bash
     - name: Run pre-push hooks.
       uses: pre-commit/action@v2.0.3
       with:
         extra_args: "--all-files --hook-stage push"
       env:
         SKIP: no-commit-to-branch
+    - name: Save Docker images.
+      if: steps.docker-cache.outputs.cache-hit != 'true'
+      run: >
+        docker image list --format "{{ .Repository }}:{{ .Tag }}" |
+        xargs --delimiter="\n" docker save --output ~/.docker-images.tar
+      shell: bash
