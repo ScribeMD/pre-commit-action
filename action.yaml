@@ -1,4 +1,4 @@
-name: ScribeMD Pre-commit
+name: Pre-commit Optimized for ScribeMD/pre-commit-hooks
 author: Kurt von Laven
 description: >
   Install pre-commit via asdf and Poetry; then run pre-commit hooks with extra
