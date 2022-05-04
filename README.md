@@ -14,7 +14,6 @@ GitHub Action Optimized for Running
 - [pre-commit-action](#pre-commit-action)
   - [Usage](#usage)
   - [Supported Runners](#supported-runners)
-  - [Contributing](#contributing)
   - [Changelog](#changelog)
 
 <!--TOC-->
@@ -48,10 +47,6 @@ protect the default branch.
 
 Please refer to
 [README.md of ScribeMD/rootless-docker](https://github.com/ScribeMD/rootless-docker#supported-runners).
-
-## Contributing
-
-Please refer to [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Changelog
 
