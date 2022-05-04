@@ -46,8 +46,8 @@ protect the default branch.
 ## Supported Runners
 
 Please refer to
-[README.md of ScribeMD/rootless-docker](https://github.com/ScribeMD/rootless-docker#supported-runners).
+[`README.md` of ScribeMD/rootless-docker](https://github.com/ScribeMD/rootless-docker#supported-runners).
 
 ## Changelog
 
-Please refer to [CHANGELOG.md](CHANGELOG.md).
+Please refer to [`CHANGELOG.md`](CHANGELOG.md).
