@@ -18,16 +18,18 @@ GitHub Action Optimized for Running
 
 <!--TOC-->
 
-Install [asdf](https://asdf-vm.com/); use asdf to install Node.js, Python, and
+Install [asdf](https://asdf-vm.com/); use asdf to install
+[Node.js](https://nodejs.org), [Python](https://www.python.org), and
 [Poetry](https://python-poetry.org/); use Poetry to install
-pre-commit; and finally run pre-commit hooks. Assume the presence of
+[pre-commit](https://pre-commit.com); and finally run pre-commit hooks. Assume
+the presence of
 [`.tool-versions`](https://asdf-vm.com/manage/configuration.html#tool-versions)
 specifying versions for Node.js, Python, and Poetry as well as
 [`poetry.lock`](https://python-poetry.org/docs/basic-usage/#installing-with-poetrylock).
-Cache Node.js packages specified in `.mega-linter.yaml`,
+Cache Node.js packages specified in [`.mega-linter.yaml`](https://megalinter.github.io),
 `.pre-commit-config.yaml`, and/or `.pre-commit-hooks.yaml`.
-Since pre-commit [supports Docker](https://pre-commit.com/#docker_image), cache
-Docker images. Skip the
+Since [pre-commit supports Docker](https://pre-commit.com/#docker_image), cache
+[Docker](https://www.docker.com/) images. Skip the
 [`no-commit-to-branch` hook](https://github.com/pre-commit/pre-commit-hooks#no-commit-to-branch)
 since it causes all runs on a given branch to fail and is most often used to
 protect the default branch.
