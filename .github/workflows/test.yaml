@@ -27,10 +27,10 @@ jobs:
       - name: Check out repository.
         uses: actions/checkout@v3.0.2
       - name: Install and run pre-commit hooks (self-test).
-        if: ${{ github.repository == 'ScribeMD/pre-commit-action' }}
+        if: github.repository == 'ScribeMD/pre-commit-action'
         uses: ./
       - name: Install and run pre-commit hooks (called workflow).
-        if: ${{ github.repository != 'ScribeMD/pre-commit-action' }}
+        if: github.repository != 'ScribeMD/pre-commit-action'
         uses: ScribeMD/pre-commit-action@main
       - name: Send Slack notification with job status.
         if: always()
