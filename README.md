@@ -1,7 +1,6 @@
 # pre-commit-action
 
 [![Test](https://github.com/ScribeMD/pre-commit-action/workflows/Test/badge.svg)](https://github.com/ScribeMD/pre-commit-action/actions/workflows/test.yaml)
-[![Bump Version](https://github.com/ScribeMD/pre-commit-action/workflows/Bump%20Version/badge.svg)](https://github.com/ScribeMD/pre-commit-action/actions/workflows/bump-version.yaml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square)](https://conventionalcommits.org)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
@@ -32,7 +31,10 @@ Since [pre-commit supports Docker](https://pre-commit.com/#docker_image), cache
 [Docker](https://www.docker.com/) images. Skip the
 [`no-commit-to-branch` hook](https://github.com/pre-commit/pre-commit-hooks#no-commit-to-branch)
 since it causes all runs on a given branch to fail and is most often used to
-protect the default branch.
+protect the default branch. Finally, uninstall pre-commit hooks to avoid
+breaking subsequent Git commands. This relies on specifying
+[`default_install_hook_types`](https://pre-commit.com/#top_level-default_install_hook_types)
+in `.pre-commit-config.yaml`.
 
 ## Usage
 
