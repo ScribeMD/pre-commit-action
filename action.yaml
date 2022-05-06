@@ -65,3 +65,6 @@ runs:
         extra_args: "--all-files --hook-stage push"
       env:
         SKIP: no-commit-to-branch
+    - name: Uninstall pre-commit hooks. # Don't break subsequent Git commands.
+      run: pre-commit uninstall
+      shell: bash

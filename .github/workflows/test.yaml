@@ -7,6 +7,13 @@ on:
     branches:
       - main
   workflow_call:
+    inputs:
+      no_bump:
+        description: >
+          If false, run the Commitizen action on push to main to commit a version
+          bump and tag a release if there are any release-worthy changes.
+        required: false
+        type: boolean
     secrets:
       SLACK_BOT_TOKEN:
         description: >
@@ -26,12 +33,26 @@ jobs:
     steps:
       - name: Check out repository.
         uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0
       - name: Install and run pre-commit hooks (self-test).
         if: github.repository == 'ScribeMD/pre-commit-action'
         uses: ./
       - name: Install and run pre-commit hooks (called workflow).
         if: github.repository != 'ScribeMD/pre-commit-action'
         uses: ScribeMD/pre-commit-action@main
+        # inputs.no_bump is null if the workflow wasn't called.
+      - name: Push a commit to main to bump version and update changelog.
+        if: >
+          !inputs.no_bump
+          && !startsWith(github.event.head_commit.message, 'bump:')
+        uses: commitizen-tools/commitizen-action@0.13.0
+        with:
+          branch: main
+          git_name: commitizen-github-action[bot]
+          git_email: commitizen-github-action[bot]@users.noreply.github.com
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commitizen_version: 2.24.0 # Keep in sync with .pre-commit-config.yaml and pyproject.toml.
       - name: Send Slack notification with job status.
         if: always()
         uses: ScribeMD/slack-templates@0.3.0
