@@ -8,7 +8,7 @@ on:
       - main
   workflow_call:
     inputs:
-      no_bump:
+      no-bump:
         description: >
           If false, run the Commitizen action on push to main to commit a version
           bump and tag a release if there are any release-worthy changes.
@@ -41,10 +41,10 @@ jobs:
       - name: Install and run pre-commit hooks (called workflow).
         if: github.repository != 'ScribeMD/pre-commit-action'
         uses: ScribeMD/pre-commit-action@main
-        # inputs.no_bump is null if the workflow wasn't called.
+        # inputs.no-bump is null if the workflow wasn't called.
       - name: Push a commit to main to bump version and update changelog.
         if: >
-          !inputs.no_bump
+          !inputs.no-bump
           && github.event_name == 'push' && github.ref == 'refs/heads/main'
           && !startsWith(github.event.head_commit.message, 'bump:')
         uses: commitizen-tools/commitizen-action@0.13.1
