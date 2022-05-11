@@ -47,7 +47,7 @@ jobs:
           !inputs.no-bump
           && github.event_name == 'push' && github.ref == 'refs/heads/main'
           && !startsWith(github.event.head_commit.message, 'bump:')
-        uses: commitizen-tools/commitizen-action@0.13.1
+        uses: commitizen-tools/commitizen-action@0.13.2
         with:
           git_name: commitizen-github-action[bot]
           git_email: commitizen-github-action[bot]@users.noreply.github.com
