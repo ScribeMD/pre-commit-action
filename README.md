@@ -44,7 +44,7 @@ in `.pre-commit-config.yaml`.
 
 ```yaml
 - name: Install and run pre-commit hooks.
-  uses: ScribeMD/pre-commit-action@0.4.2
+  uses: ScribeMD/pre-commit-action@0.5.0
 ```
 
 ## Supported Runners
