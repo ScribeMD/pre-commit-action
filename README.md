@@ -12,6 +12,8 @@ GitHub Action Optimized for Running
 
 - [pre-commit-action](#pre-commit-action)
   - [Usage](#usage)
+  - [Inputs](#inputs)
+    - [Optional](#optional)
   - [Supported Runners](#supported-runners)
   - [Changelog](#changelog)
 
@@ -20,8 +22,9 @@ GitHub Action Optimized for Running
 Install [asdf](https://asdf-vm.com/); use asdf to install
 [Node.js](https://nodejs.org), [Python](https://www.python.org), and
 [Poetry](https://python-poetry.org/); use Poetry to install
-[pre-commit](https://pre-commit.com); and finally run pre-commit hooks. Assume
-the presence of
+[pre-commit](https://pre-commit.com); run pre-commit hooks; and optionally use
+[commitizen-action](https://github.com/commitizen-tools/commitizen-action/) to
+bump the project version. Assume the presence of
 [`.tool-versions`](https://asdf-vm.com/manage/configuration.html#tool-versions)
 specifying versions for Node.js, Python, and Poetry as well as
 [`poetry.lock`](https://python-poetry.org/docs/basic-usage/#installing-with-poetrylock).
@@ -46,6 +49,21 @@ in `.pre-commit-config.yaml`.
 - name: Install and run pre-commit hooks.
   uses: ScribeMD/pre-commit-action@0.5.0
 ```
+
+## Inputs
+
+### Optional
+
+#### bump
+
+default: `true`
+
+If `"true"`, run
+[commitizen-action](https://github.com/commitizen-tools/commitizen-action/) on
+push to `main` to commit a version bump and tag a release if there are any
+release-worthy changes. Uses your
+[`GITHUB_TOKEN`](https://docs.github.com/en/actions/security-guides/automatic-token-authentication),
+which must have write access to your repository.
 
 ## Supported Runners
 
