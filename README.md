@@ -45,10 +45,10 @@ in `.pre-commit-config.yaml`.
   [rootless-docker](https://github.com/ScribeMD/rootless-docker) is used to avoid
   permission issues:
 
-```yaml
-- name: Install and run pre-commit hooks.
-  uses: ScribeMD/pre-commit-action@0.6.0
-```
+  ```yaml
+  - name: Install and run pre-commit hooks.
+    uses: ScribeMD/pre-commit-action@0.6.0
+  ```
 
 ## Inputs
 
