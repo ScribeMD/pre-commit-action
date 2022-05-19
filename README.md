@@ -63,7 +63,11 @@ If `"true"`, run
 push to `main` to commit a version bump and tag a release if there are any
 release-worthy changes. Uses your
 [`GITHUB_TOKEN`](https://docs.github.com/en/actions/security-guides/automatic-token-authentication),
-which must have write access to your repository.
+which must have write access to your repository. Commitizen relies on tags in
+order to preform an incremental release, so you must pass
+[`fetch-depth: 0`](https://github.com/marketplace/actions/checkout#Fetch-all-history-for-all-tags-and-branches)
+to [`checkout`](https://github.com/marketplace/actions/checkout) unless `bump`
+is `"false"`.
 
 ## Supported Runners
 
