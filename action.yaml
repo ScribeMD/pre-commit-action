@@ -10,7 +10,10 @@ inputs:
   bump:
     description: >
       If "true," run the Commitizen action on push to main to commit a version
-      bump and tag a release if there are any release-worthy changes.
+      bump and tag a release if there are any release-worthy changes. Commitizen
+      relies on tags in order to preform an incremental release, so you must pass
+      fetch-depth: 0 to the official GitHub checkout action unless bump is
+      "false."
     required: false
     default: "true"
 runs:
