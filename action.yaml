@@ -19,6 +19,10 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Get operating system name and version.
+      id: os
+      run: echo "::set-output name=image::$ImageOS"
+      shell: bash
     - name: Install asdf.
       uses: asdf-vm/actions/setup@v1.1.0
       with:
@@ -28,7 +32,10 @@ runs:
       id: asdf-cache
       with:
         path: ${{ env.ASDF_DIR }}
-        key: asdf-v0.10.1-${{ runner.os }}-${{ hashFiles('**/.tool-versions') }}
+        key: >
+          asdf-v0.10.1-${{ steps.os.outputs.image }}-${{
+            hashFiles('**/.tool-versions')
+          }}
     - name: Install asdf-managed tools based on .tool-versions.
       if: steps.asdf-cache.outputs.cache-hit != 'true'
       uses: asdf-vm/actions/install@v1.1.0
@@ -43,7 +50,10 @@ runs:
       uses: actions/cache@v3.0.2
       with:
         path: .venv
-        key: poetry-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+        key: >
+          poetry-${{ steps.os.outputs.image }}-${{
+            hashFiles('**/poetry.lock')
+          }}
     - name: Install Poetry dependencies.
       run: poetry install
       shell: bash
@@ -58,7 +68,7 @@ runs:
       with:
         path: ${{ steps.npm-cache.outputs.path }}
         key: >
-          node-${{ runner.os }}-${{ hashFiles(
+          node-${{ steps.os.outputs.image }}-${{ hashFiles(
             '.mega-linter.yaml',
             '.pre-commit-config.yaml',
             '.pre-commit-hooks.yaml'
@@ -68,7 +78,10 @@ runs:
     - name: Cache Docker images.
       uses: ScribeMD/docker-cache@0.1.2
       with:
-        key: docker-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
+        key: >
+          docker-${{ steps.os.outputs.image }}-${{
+            hashFiles('.pre-commit-config.yaml')
+          }}
     - name: Run pre-push hooks.
       uses: pre-commit/action@v2.0.3
       with:
