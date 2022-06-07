@@ -47,7 +47,7 @@ jobs:
           bump: ${{ inputs.bump }}
       - name: Send Slack notification with job status.
         if: always()
-        uses: ScribeMD/slack-templates@0.4.1
+        uses: ScribeMD/slack-templates@0.5.0
         with:
           bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           channel-id: ${{ secrets.SLACK_ACTIONS_CHANNEL_ID }}
