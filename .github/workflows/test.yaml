@@ -32,6 +32,9 @@ jobs:
   test:
     name: Run Pre-commit Hooks
     runs-on: ubuntu-20.04
+    permissions:
+      contents: write # for pre-commit-action
+      pull-requests: read # for slack-templates in private repositories
     steps:
       - name: Check out repository.
         uses: actions/checkout@v3.0.2
