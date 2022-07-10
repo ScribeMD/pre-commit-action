@@ -23,6 +23,7 @@ GitHub Action Optimized for Running
   - [Inputs](#inputs)
     - [Optional](#optional)
   - [Supported Runners](#supported-runners)
+  - [Permissions](#permissions)
   - [Changelog](#changelog)
 
 <!--TOC-->
@@ -81,6 +82,12 @@ is `"false"`.
 
 Please refer to
 [`README.md` of ScribeMD/rootless-docker](https://github.com/ScribeMD/rootless-docker#supported-runners).
+
+## Permissions
+
+The `contents:write`
+[permission](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token)
+is required to bump the project version via Commitizen unless `bump` is `false`.
 
 ## Changelog
 
