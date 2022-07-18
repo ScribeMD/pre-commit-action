@@ -28,7 +28,7 @@ runs:
       with:
         asdf_branch: v0.10.2
     - name: Cache asdf and asdf-managed tools.
-      uses: actions/cache@v3.0.4
+      uses: actions/cache@v3.0.5
       id: asdf-cache
       with:
         path: ${{ env.ASDF_DIR }}
@@ -47,7 +47,7 @@ runs:
         echo "${{ github.workspace }}/.venv/bin" >>"$GITHUB_PATH"
       shell: bash
     - name: Cache Poetry dependencies.
-      uses: actions/cache@v3.0.4
+      uses: actions/cache@v3.0.5
       with:
         path: .venv
         key: >
@@ -64,7 +64,7 @@ runs:
         echo "::set-output name=path::$npm_cache"
       shell: bash
     - name: Cache npm dependencies.
-      uses: actions/cache@v3.0.4
+      uses: actions/cache@v3.0.5
       with:
         path: ${{ steps.npm-cache.outputs.path }}
         key: >
