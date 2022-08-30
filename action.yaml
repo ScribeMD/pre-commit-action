@@ -82,12 +82,17 @@ runs:
           docker-${{ steps.os.outputs.image }}-${{
             hashFiles('.pre-commit-config.yaml')
           }}
+    - name: Set default branch for commitizen-branch hook.
+      run: git remote set-head origin --auto
+      shell: bash
+    - name: Skip hooks that would false positive on default branch.
+      if: github.ref == 'refs/heads/main'
+      run: echo "SKIP=commitizen-branch,no-commit-to-branch" >>"$GITHUB_ENV"
+      shell: bash
     - name: Run pre-push hooks.
       uses: pre-commit/action@v3.0.0
       with:
         extra_args: "--all-files --hook-stage push"
-      env:
-        SKIP: no-commit-to-branch
     - name: Uninstall pre-commit hooks. # Don't break subsequent Git commands.
       run: pre-commit uninstall
       shell: bash
