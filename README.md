@@ -40,16 +40,23 @@ specifying versions for Node.js, Python, and Poetry as well as
 Cache Node.js packages specified in [`.mega-linter.yaml`](https://megalinter.github.io),
 `.pre-commit-config.yaml`, and/or `.pre-commit-hooks.yaml`.
 Since [pre-commit supports Docker](https://pre-commit.com/#docker_image), cache
-[Docker](https://www.docker.com/) images. Skip the
+[Docker](https://www.docker.com/) images. Set `origin/HEAD` to the default
+branch to support the
+[`commitizen-branch` hook](https://commitizen-tools.github.io/commitizen/#integrating-with-pre-commit).
+Skip the `commitizen-branch` hook and
 [`no-commit-to-branch` hook](https://github.com/pre-commit/pre-commit-hooks#no-commit-to-branch)
-since it causes all runs on a given branch to fail and is most often used to
-protect the default branch. Finally, uninstall pre-commit hooks to avoid
+on `main` to avoid false positives. Finally, uninstall pre-commit hooks to avoid
 breaking subsequent Git commands. This relies on specifying
 [`default_install_hook_types`](https://pre-commit.com/#top_level-default_install_hook_types)
 in `.pre-commit-config.yaml`.
 
 ## Usage
 
+- Commitizen relies on tags in order to perform an incremental release, and the
+  [`commitizen-branch` hook](https://commitizen-tools.github.io/commitizen/#integrating-with-pre-commit)
+  relies on `origin/HEAD` being set to the default branch, so you must pass
+  [`fetch-depth: 0`](https://github.com/marketplace/actions/checkout#Fetch-all-history-for-all-tags-and-branches)
+  to [`checkout`](https://github.com/marketplace/actions/checkout).
 - Add the following step before your first use of Docker since
   [rootless-docker](https://github.com/ScribeMD/rootless-docker) is used to avoid
   permission issues:
@@ -72,11 +79,7 @@ If `"true"`, run
 push to `main` to commit a version bump and tag a release if there are any
 release-worthy changes. Uses your
 [`GITHUB_TOKEN`](https://docs.github.com/en/actions/security-guides/automatic-token-authentication),
-which must have write access to your repository. Commitizen relies on tags in
-order to perform an incremental release, so you must pass
-[`fetch-depth: 0`](https://github.com/marketplace/actions/checkout#Fetch-all-history-for-all-tags-and-branches)
-to [`checkout`](https://github.com/marketplace/actions/checkout) unless `bump`
-is `"false"`.
+which must have write access to your repository.
 
 ## Supported Runners
 
