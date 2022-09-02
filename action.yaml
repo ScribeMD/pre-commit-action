@@ -39,13 +39,6 @@ runs:
     - name: Install asdf-managed tools based on .tool-versions.
       if: steps.asdf-cache.outputs.cache-hit != 'true'
       uses: asdf-vm/actions/install@v1.1.0
-    - name: Add Poetry and its dependencies to PATH.
-      run: |
-        for version in "$ASDF_DIR/installs/poetry/"*; do
-          echo "$version/bin" >>"$GITHUB_PATH"
-        done
-        echo "${{ github.workspace }}/.venv/bin" >>"$GITHUB_PATH"
-      shell: bash
     - name: Cache Poetry dependencies.
       uses: actions/cache@v3.0.8
       with:
@@ -82,19 +75,35 @@ runs:
           docker-${{ steps.os.outputs.image }}-${{
             hashFiles('.pre-commit-config.yaml')
           }}
-    - name: Set default branch for commitizen-branch hook.
-      run: git remote set-head origin --auto
-      shell: bash
-    - name: Skip hooks that would false positive on default branch.
-      if: github.ref == 'refs/heads/main'
-      run: echo "SKIP=commitizen-branch,no-commit-to-branch" >>"$GITHUB_ENV"
-      shell: bash
-    - name: Run pre-push hooks.
-      uses: pre-commit/action@v3.0.0
+    - name: Cache pre-commit hooks.
+      uses: actions/cache@v3.0.8
       with:
-        extra_args: "--all-files --hook-stage push"
-    - name: Uninstall pre-commit hooks. # Don't break subsequent Git commands.
-      run: pre-commit uninstall
+        path: ~/.cache/pre-commit
+        key: >
+          pre-commit-${{ steps.os.outputs.image }}-${{ hashFiles(
+            '**/.tool-versions',
+            '**/poetry.lock',
+            '.pre-commit-config.yaml'
+          ) }}
+    - name: Run pre-push hooks.
+      run: |
+        git remote set-head origin --auto # for commitizen-branch hook
+
+        pre_commit_cmd=()
+        if [[ $GITHUB_REF_NAME == 'main' ]]; then
+          pre_commit_cmd+=('SKIP=commitizen-branch,no-commit-to-branch')
+        fi
+        pre_commit_cmd+=(
+          'poetry' 'run'
+          'pre-commit' 'run'
+          '--all-files'
+          '--hook-stage' 'push'
+          '--show-diff-on-failure'
+          '--color' 'always'
+        )
+        echo "${pre_commit_cmd[@]}"
+        "${pre_commit_cmd[@]}"
+        poetry run pre-commit uninstall # Don't break subsequent Git commands.
       shell: bash
     - name: Push a commit to main to bump version and update changelog.
       if: >
