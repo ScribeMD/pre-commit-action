@@ -89,20 +89,11 @@ runs:
       run: |
         git remote set-head origin --auto # for commitizen-branch hook
 
-        pre_commit_cmd=()
         if [[ $GITHUB_REF_NAME == 'main' ]]; then
-          pre_commit_cmd+=('SKIP=commitizen-branch,no-commit-to-branch')
+          export SKIP=commitizen-branch,no-commit-to-branch
         fi
-        pre_commit_cmd+=(
-          'poetry' 'run'
-          'pre-commit' 'run'
-          '--all-files'
-          '--hook-stage' 'push'
-          '--show-diff-on-failure'
-          '--color' 'always'
-        )
-        echo "${pre_commit_cmd[@]}"
-        "${pre_commit_cmd[@]}"
+        poetry run pre-commit run \
+          --all-files --hook-stage push --show-diff-on-failure --color always
         poetry run pre-commit uninstall # Don't break subsequent Git commands.
       shell: bash
     - name: Push a commit to main to bump version and update changelog.
