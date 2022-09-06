@@ -48,7 +48,7 @@ runs:
             hashFiles('**/poetry.lock')
           }}
     - name: Install Poetry dependencies.
-      run: poetry install
+      run: poetry install --sync
       shell: bash
     - name: Get npm cache directory.
       id: npm-cache
