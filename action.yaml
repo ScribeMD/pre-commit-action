@@ -47,6 +47,9 @@ runs:
           poetry-${{ steps.os.outputs.image }}-${{
             hashFiles('**/poetry.lock')
           }}
+    - name: Configure Poetry to use asdf-managed Python.
+      run: poetry env use "$(asdf which python)"
+      shell: bash
     - name: Install Poetry dependencies.
       run: poetry install --sync
       shell: bash
