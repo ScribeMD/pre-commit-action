@@ -1,3 +1,4 @@
 !preform
 deps
 Laven
+setuptools
