@@ -39,14 +39,23 @@ runs:
     - name: Install asdf-managed tools based on .tool-versions.
       if: steps.asdf-cache.outputs.cache-hit != 'true'
       uses: asdf-vm/actions/install@v1.1.0
+    - name: Get Poetry cache directory.
+      id: poetry-cache
+      run: |
+        poetry_cache="$(poetry config -- cache-dir)"
+        echo "::set-output name=path::$poetry_cache"
+      shell: bash
     - name: Cache Poetry dependencies.
       uses: actions/cache@v3.0.8
       with:
-        path: .venv
+        path: |
+          ${{ steps.poetry-cache.outputs.path }}
+          .venv
         key: >
-          poetry-${{ steps.os.outputs.image }}-${{
-            hashFiles('**/poetry.lock')
-          }}
+          poetry-${{ steps.os.outputs.image }}-${{ hashFiles(
+            'poetry.toml',
+            '**/poetry.lock'
+          ) }}
     - name: Configure Poetry to use asdf-managed Python.
       run: poetry env use "$(asdf which python)"
       shell: bash
