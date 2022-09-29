@@ -37,11 +37,12 @@ bump the project version. Assume the presence of
 [`.tool-versions`](https://asdf-vm.com/manage/configuration.html#tool-versions)
 specifying versions for Node.js, Python, and Poetry as well as
 [`poetry.lock`](https://python-poetry.org/docs/basic-usage/#installing-with-poetrylock).
-Cache Node.js packages specified in [`.mega-linter.yaml`](https://megalinter.github.io),
-`.pre-commit-config.yaml`, and/or `.pre-commit-hooks.yaml`.
-Since [pre-commit supports Docker](https://pre-commit.com/#docker_image), cache
-[Docker](https://www.docker.com/) images. Set `origin/HEAD` to the default
-branch to support the
+Cache Poetry dependencies. Cache Node.js packages specified in
+[`.mega-linter.yaml`](https://megalinter.github.io), `.pre-commit-config.yaml`,
+and/or `.pre-commit-hooks.yaml`. Since
+[pre-commit supports Docker](https://pre-commit.com/#docker_image), cache
+[Docker](https://www.docker.com/) images. Cache pre-commit hook environments.
+Set `origin/HEAD` to the default branch to support the
 [`commitizen-branch` hook](https://commitizen-tools.github.io/commitizen/#integrating-with-pre-commit).
 Skip the `commitizen-branch` hook and
 [`no-commit-to-branch` hook](https://github.com/pre-commit/pre-commit-hooks#no-commit-to-branch)
