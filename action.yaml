@@ -23,6 +23,41 @@ runs:
       id: os
       run: echo "::set-output name=image::$ImageOS"
       shell: bash
+    - name: Get asdf versions of tools with first-class GitHub Actions support.
+      id: tool-versions
+      run: |
+        file=()
+        while IFS= read -r line; do
+          array=($line)
+          tool="${array[0]}"
+          version="${array[1]}"
+          case $tool in
+            dotnet-core | nodejs | python)
+              echo "::set-output name=$tool::$version"
+              ;;
+
+            *)
+              file+=("$line")
+              ;;
+          esac
+        done <.tool-versions
+
+        # Remove tools to be installed via actions/setup-* from .tool-versions.
+        printf "%s\n" "${file[@]}" >.tool-versions
+      shell: bash
+    - name: Set up .NET SDK at version specified in .tool-versions.
+      if: steps.tool-versions.outputs.dotnet-core != ''
+      uses: actions/setup-dotnet@v2.1.1
+      with:
+        dotnet-version: ${{ steps.tool-versions.outputs.dotnet-core }}
+    - name: Set up Node.js at version specified in .tool-versions.
+      uses: actions/setup-node@v3.5.0
+      with:
+        node-version: ${{ steps.tool-versions.outputs.nodejs }}
+    - name: Set up Python at version specified in .tool-versions.
+      uses: actions/setup-python@v4.2.0
+      with:
+        python-version: ${{ steps.tool-versions.outputs.python }}
     - name: Install asdf.
       uses: asdf-vm/actions/setup@v1.1.0
       with:
@@ -39,6 +74,9 @@ runs:
     - name: Install asdf-managed tools based on .tool-versions.
       if: steps.asdf-cache.outputs.cache-hit != 'true'
       uses: asdf-vm/actions/install@v1.1.0
+    - name: Restore .tool-versions.
+      run: git restore .tool-versions
+      shell: bash
     - name: Get Poetry cache directory.
       id: poetry-cache
       run: |
@@ -56,9 +94,6 @@ runs:
             'poetry.toml',
             '**/poetry.lock'
           ) }}
-    - name: Configure Poetry to use asdf-managed Python.
-      run: poetry env use "$(asdf which python)"
-      shell: bash
     - name: Install Poetry dependencies.
       run: poetry install --sync
       shell: bash
@@ -102,7 +137,9 @@ runs:
         git remote set-head origin --auto # for commitizen-branch hook
 
         if [[ $GITHUB_REF_NAME == 'main' ]]; then
-          export SKIP=commitizen-branch,no-commit-to-branch
+          export SKIP=asdf-install,commitizen-branch,no-commit-to-branch
+        else
+          export SKIP=asdf-install
         fi
         poetry run pre-commit run \
           --all-files --hook-stage push --show-diff-on-failure --color always

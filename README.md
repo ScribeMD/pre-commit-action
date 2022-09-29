@@ -28,10 +28,10 @@ GitHub Action Optimized for Running
 
 <!--TOC-->
 
-Install [asdf](https://asdf-vm.com/); use asdf to install
-[Node.js](https://nodejs.org), [Python](https://www.python.org), and
-[Poetry](https://python-poetry.org/); use Poetry to install
-[pre-commit](https://pre-commit.com); run pre-commit hooks; and optionally use
+Install [asdf](https://asdf-vm.com/), [Node.js](https://nodejs.org),
+[Python](https://www.python.org), and [Poetry](https://python-poetry.org/); use
+Poetry to install [pre-commit](https://pre-commit.com); run pre-commit hooks;
+and optionally use
 [commitizen-action](https://github.com/commitizen-tools/commitizen-action/) to
 bump the project version. Assume the presence of
 [`.tool-versions`](https://asdf-vm.com/manage/configuration.html#tool-versions)

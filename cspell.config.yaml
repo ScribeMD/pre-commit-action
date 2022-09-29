@@ -8,6 +8,7 @@ dictionaryDefinitions:
   - name: custom
     path: .dictionary.txt
 dictionaries:
+  - bash
   - custom
   - fullstack
   - npm
