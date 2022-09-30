@@ -38,7 +38,7 @@ bump the project version. Assume the presence of
 specifying versions for Node.js, Python, and Poetry as well as
 [`poetry.lock`](https://python-poetry.org/docs/basic-usage/#installing-with-poetrylock).
 Cache Poetry dependencies. Cache Node.js packages specified in
-[`.mega-linter.yaml`](https://megalinter.github.io), `.pre-commit-config.yaml`,
+[`.mega-linter.yaml`](https://oxsecurity.github.io/megalinter/), `.pre-commit-config.yaml`,
 and/or `.pre-commit-hooks.yaml`. Since
 [pre-commit supports Docker](https://pre-commit.com/#docker_image), cache
 [Docker](https://www.docker.com/) images. Cache pre-commit hook environments.
