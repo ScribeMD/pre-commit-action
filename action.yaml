@@ -63,7 +63,7 @@ runs:
       with:
         asdf_branch: v0.10.2
     - name: Cache asdf and asdf-managed tools.
-      uses: actions/cache@v3.0.9
+      uses: actions/cache@v3.0.10
       id: asdf-cache
       with:
         path: ${{ env.ASDF_DIR }}
@@ -84,7 +84,7 @@ runs:
         echo "::set-output name=path::$poetry_cache"
       shell: bash
     - name: Cache Poetry dependencies.
-      uses: actions/cache@v3.0.9
+      uses: actions/cache@v3.0.10
       with:
         path: |
           ${{ steps.poetry-cache.outputs.path }}
@@ -104,7 +104,7 @@ runs:
         echo "::set-output name=path::$npm_cache"
       shell: bash
     - name: Cache npm dependencies.
-      uses: actions/cache@v3.0.9
+      uses: actions/cache@v3.0.10
       with:
         path: ${{ steps.npm-cache.outputs.path }}
         key: >
@@ -123,7 +123,7 @@ runs:
             hashFiles('.pre-commit-config.yaml')
           }}
     - name: Cache pre-commit hooks.
-      uses: actions/cache@v3.0.9
+      uses: actions/cache@v3.0.10
       with:
         path: ~/.cache/pre-commit
         key: >
