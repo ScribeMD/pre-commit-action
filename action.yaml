@@ -150,9 +150,10 @@ runs:
         inputs.bump == 'true'
         && github.event_name == 'push' && github.ref == 'refs/heads/main'
         && !startsWith(github.event.head_commit.message, 'bump:')
-      uses: commitizen-tools/commitizen-action@0.14.1
+      uses: commitizen-tools/commitizen-action@0.15.0
       with:
         git_name: commitizen-github-action[bot]
         git_email: commitizen-github-action[bot]@users.noreply.github.com
         github_token: ${{ github.token }}
         commitizen_version: 2.35.0 # Keep in sync with .pre-commit-config.yaml and pyproject.toml.
+        check_consistency: true
