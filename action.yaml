@@ -21,7 +21,7 @@ runs:
   steps:
     - name: Get operating system name and version.
       id: os
-      run: echo "::set-output name=image::$ImageOS"
+      run: echo "IMAGE=$ImageOS" >>"$GITHUB_OUTPUT"
       shell: bash
     - name: Get asdf versions of tools with first-class GitHub Actions support.
       id: tool-versions
@@ -33,7 +33,7 @@ runs:
           version="${array[1]}"
           case $tool in
             dotnet-core | nodejs | python)
-              echo "::set-output name=$tool::$version"
+              echo "$tool=$version" >>"$GITHUB_OUTPUT"
               ;;
 
             *)
@@ -68,7 +68,7 @@ runs:
       with:
         path: ${{ env.ASDF_DIR }}
         key: >
-          asdf-v0.10.2-${{ steps.os.outputs.image }}-${{
+          asdf-v0.10.2-${{ steps.os.outputs.IMAGE }}-${{
             hashFiles('**/.tool-versions')
           }}
     - name: Install asdf-managed tools based on .tool-versions.
@@ -81,16 +81,16 @@ runs:
       id: poetry-cache
       run: |
         poetry_cache="$(poetry config -- cache-dir)"
-        echo "::set-output name=path::$poetry_cache"
+        echo "PATH=$poetry_cache" >>"$GITHUB_OUTPUT"
       shell: bash
     - name: Cache Poetry dependencies.
       uses: actions/cache@v3.0.10
       with:
         path: |
-          ${{ steps.poetry-cache.outputs.path }}
+          ${{ steps.poetry-cache.outputs.PATH }}
           .venv
         key: >
-          poetry-${{ steps.os.outputs.image }}-${{ hashFiles(
+          poetry-${{ steps.os.outputs.IMAGE }}-${{ hashFiles(
             'poetry.toml',
             '**/poetry.lock'
           ) }}
@@ -101,14 +101,14 @@ runs:
       id: npm-cache
       run: |
         npm_cache="$(npm config get cache)"
-        echo "::set-output name=path::$npm_cache"
+        echo "PATH=$npm_cache" >>"$GITHUB_OUTPUT"
       shell: bash
     - name: Cache npm dependencies.
       uses: actions/cache@v3.0.10
       with:
-        path: ${{ steps.npm-cache.outputs.path }}
+        path: ${{ steps.npm-cache.outputs.PATH }}
         key: >
-          node-${{ steps.os.outputs.image }}-${{ hashFiles(
+          node-${{ steps.os.outputs.IMAGE }}-${{ hashFiles(
             '.mega-linter.yaml',
             '.pre-commit-config.yaml',
             '.pre-commit-hooks.yaml'
@@ -119,7 +119,7 @@ runs:
       uses: ScribeMD/docker-cache@0.2.4
       with:
         key: >
-          docker-${{ steps.os.outputs.image }}-${{
+          docker-${{ steps.os.outputs.IMAGE }}-${{
             hashFiles('.pre-commit-config.yaml')
           }}
     - name: Cache pre-commit hooks.
@@ -127,7 +127,7 @@ runs:
       with:
         path: ~/.cache/pre-commit
         key: >
-          pre-commit-${{ steps.os.outputs.image }}-${{ hashFiles(
+          pre-commit-${{ steps.os.outputs.IMAGE }}-${{ hashFiles(
             '**/.tool-versions',
             '**/poetry.lock',
             '.pre-commit-config.yaml'
