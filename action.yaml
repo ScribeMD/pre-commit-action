@@ -114,7 +114,7 @@ runs:
             '.pre-commit-hooks.yaml'
           ) }}
     - name: Use Docker in rootless mode.
-      uses: ScribeMD/rootless-docker@0.2.0
+      uses: ScribeMD/rootless-docker@0.2.1
     - name: Cache Docker images.
       uses: ScribeMD/docker-cache@0.2.4
       with:
