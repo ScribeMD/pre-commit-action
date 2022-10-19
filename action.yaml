@@ -116,7 +116,7 @@ runs:
     - name: Use Docker in rootless mode.
       uses: ScribeMD/rootless-docker@0.2.1
     - name: Cache Docker images.
-      uses: ScribeMD/docker-cache@0.2.4
+      uses: ScribeMD/docker-cache@0.2.5
       with:
         key: >
           docker-${{ steps.os.outputs.IMAGE }}-${{
