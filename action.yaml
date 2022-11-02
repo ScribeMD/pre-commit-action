@@ -47,7 +47,7 @@ runs:
       shell: bash
     - name: Set up .NET SDK at version specified in .tool-versions.
       if: steps.tool-versions.outputs.dotnet-core != ''
-      uses: actions/setup-dotnet@v3.0.2
+      uses: actions/setup-dotnet@v3.0.3
       with:
         dotnet-version: ${{ steps.tool-versions.outputs.dotnet-core }}
     - name: Set up Node.js at version specified in .tool-versions.
