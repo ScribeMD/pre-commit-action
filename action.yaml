@@ -94,6 +94,9 @@ runs:
             'poetry.toml',
             '**/poetry.lock'
           ) }}
+    - name: Configure Poetry to use Python version specified in .tool-versions.
+      run: poetry env use "${{ steps.tool-versions.outputs.python }}"
+      shell: bash
     - name: Install Poetry dependencies.
       run: poetry install --sync
       shell: bash
