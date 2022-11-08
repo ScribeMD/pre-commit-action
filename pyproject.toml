@@ -9,6 +9,7 @@ build-backend = "poetry.core.masonry.api"
     "pyproject.toml:version",
     "README.md:pre-commit-action@"
   ]
+  major_version_zero = true
 
   [tool.poetry]
   name = "pre-commit-action"
