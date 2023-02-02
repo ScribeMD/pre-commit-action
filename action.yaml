@@ -63,7 +63,7 @@ runs:
       with:
         asdf_branch: v0.11.1
     - name: Cache asdf and asdf-managed tools.
-      uses: actions/cache@v3.2.3
+      uses: actions/cache@v3.2.4
       id: asdf-cache
       with:
         path: ${{ env.ASDF_DIR }}
@@ -84,7 +84,7 @@ runs:
         echo "PATH=$poetry_cache" >>"$GITHUB_OUTPUT"
       shell: bash
     - name: Cache Poetry dependencies.
-      uses: actions/cache@v3.2.3
+      uses: actions/cache@v3.2.4
       with:
         path: |
           ${{ steps.poetry-cache.outputs.PATH }}
@@ -107,7 +107,7 @@ runs:
         echo "PATH=$npm_cache" >>"$GITHUB_OUTPUT"
       shell: bash
     - name: Cache npm dependencies.
-      uses: actions/cache@v3.2.3
+      uses: actions/cache@v3.2.4
       with:
         path: ${{ steps.npm-cache.outputs.PATH }}
         key: >
@@ -145,7 +145,7 @@ runs:
       with:
         key: ${{ steps.megalinter.outputs.DOCKER_IMAGE }}
     - name: Cache pre-commit hooks.
-      uses: actions/cache@v3.2.3
+      uses: actions/cache@v3.2.4
       with:
         path: ~/.cache/pre-commit
         key: >
