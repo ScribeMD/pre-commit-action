@@ -172,7 +172,7 @@ runs:
         inputs.bump == 'true'
         && github.event_name == 'push' && github.ref == 'refs/heads/main'
         && !startsWith(github.event.head_commit.message, 'bump:')
-      uses: commitizen-tools/commitizen-action@0.16.0
+      uses: commitizen-tools/commitizen-action@0.16.3
       with:
         git_name: commitizen-github-action[bot]
         git_email: commitizen-github-action[bot]@users.noreply.github.com
