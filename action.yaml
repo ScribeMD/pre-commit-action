@@ -90,10 +90,13 @@ runs:
           ${{ steps.poetry-cache.outputs.PATH }}
           .venv
         key: >
-          poetry-${{ steps.os.outputs.IMAGE }}-${{ hashFiles(
-            'poetry.toml',
-            '**/poetry.lock'
-          ) }}
+          poetry-${{ steps.os.outputs.IMAGE }}-python${{
+            steps.tool-versions.outputs.python
+          }}-${{
+            hashFiles('poetry.toml', '**/poetry.lock')
+          }}
+        restore-keys: |
+          poetry-${{ steps.os.outputs.IMAGE }}-python${{ steps.tool-versions.outputs.python }}-
     - name: Configure Poetry to use Python version specified in .tool-versions.
       run: poetry env use "${{ steps.tool-versions.outputs.python }}"
       shell: bash
@@ -154,6 +157,7 @@ runs:
             '**/poetry.lock',
             '.pre-commit-config.yaml'
           ) }}
+        restore-keys: pre-commit-${{ steps.os.outputs.IMAGE }}-
     - name: Run pre-push hooks.
       run: |
         git remote set-head origin --auto # for commitizen-branch hook
@@ -163,6 +167,7 @@ runs:
         else
           export SKIP=asdf-install
         fi
+        poetry run pre-commit gc # Avoid partial cache restoration snowballing.
         poetry run pre-commit run \
           --all-files --hook-stage push --show-diff-on-failure --color always
         poetry run pre-commit uninstall # Don't break subsequent Git commands.
