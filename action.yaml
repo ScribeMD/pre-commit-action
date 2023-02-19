@@ -32,7 +32,7 @@ runs:
           tool="${array[0]}"
           version="${array[1]}"
           case $tool in
-            dotnet-core | nodejs | python)
+            dotnet-core | nodejs | python | ruby)
               echo "$tool=$version" >>"$GITHUB_OUTPUT"
               ;;
 
@@ -58,6 +58,11 @@ runs:
       uses: actions/setup-python@v4.5.0
       with:
         python-version: ${{ steps.tool-versions.outputs.python }}
+    - name: Set up Ruby at version specified in .tool-versions.
+      if: steps.tool-versions.outputs.ruby != ''
+      uses: ruby/setup-ruby@v1.138.0
+      with:
+        ruby-version: ${{ steps.tool-versions.outputs.ruby }}
     - name: Install asdf.
       uses: asdf-vm/actions/setup@v1.1.0
       with:
