@@ -66,14 +66,14 @@ runs:
     - name: Install asdf.
       uses: asdf-vm/actions/setup@v1.1.0
       with:
-        asdf_branch: v0.11.1
+        asdf_branch: v0.11.2
     - name: Cache asdf and asdf-managed tools.
       uses: actions/cache@v3.2.5
       id: asdf-cache
       with:
         path: ${{ env.ASDF_DIR }}
         key: >
-          asdf-v0.11.1-${{ steps.os.outputs.IMAGE }}-${{
+          asdf-v0.11.2-${{ steps.os.outputs.IMAGE }}-${{
             hashFiles('**/.tool-versions')
           }}
     - name: Install asdf-managed tools based on .tool-versions.
