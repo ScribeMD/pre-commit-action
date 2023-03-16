@@ -1,4 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>ScribeMD/.github#0.9.7"]
+  "extends": ["github>ScribeMD/.github#0.9.7"],
+  "packageRules": [
+    {
+      "matchFiles": [".github/workflows/test.yaml"],
+      "semanticCommitType": "fix"
+    }
+  ]
 }
