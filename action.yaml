@@ -60,7 +60,7 @@ runs:
         python-version: ${{ steps.tool-versions.outputs.python }}
     - name: Set up Ruby at version specified in .tool-versions.
       if: steps.tool-versions.outputs.ruby != ''
-      uses: ruby/setup-ruby@v1.144.2
+      uses: ruby/setup-ruby@v1.145.0
       with:
         ruby-version: ${{ steps.tool-versions.outputs.ruby }}
     - name: Install asdf.
