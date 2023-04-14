@@ -34,6 +34,7 @@ runs:
           case $tool in
             dotnet-core | nodejs | python | ruby)
               echo "$tool=$version" >>"$GITHUB_OUTPUT"
+              echo "${tool}-string=${tool}${version}-" >>"$GITHUB_OUTPUT"
               ;;
 
             *)
@@ -95,13 +96,13 @@ runs:
           ${{ steps.poetry-cache.outputs.PATH }}
           .venv
         key: >
-          poetry-${{ steps.os.outputs.IMAGE }}-python${{
-            steps.tool-versions.outputs.python
-          }}-${{
+          poetry-${{ steps.os.outputs.IMAGE }}-${{
+            steps.tool-versions.outputs.python-string
+          }}${{
             hashFiles('poetry.toml', '**/poetry.lock')
           }}
         restore-keys: |
-          poetry-${{ steps.os.outputs.IMAGE }}-python${{ steps.tool-versions.outputs.python }}-
+          poetry-${{ steps.os.outputs.IMAGE }}-${{ steps.tool-versions.outputs.python-string }}
     - name: Configure Poetry to use Python version specified in .tool-versions.
       run: poetry env use "${{ steps.tool-versions.outputs.python }}"
       shell: bash
@@ -157,12 +158,15 @@ runs:
       with:
         path: ~/.cache/pre-commit
         key: >
-          pre-commit-${{ steps.os.outputs.IMAGE }}-${{ hashFiles(
+          pre-commit-${{ steps.os.outputs.IMAGE }}-${{
+            steps.tool-versions.outputs.ruby-string || ''
+          }}${{ hashFiles(
             '**/.tool-versions',
             '**/poetry.lock',
             '.pre-commit-config.yaml'
           ) }}
-        restore-keys: pre-commit-${{ steps.os.outputs.IMAGE }}-
+        restore-keys: |
+          pre-commit-${{ steps.os.outputs.IMAGE }}-${{ steps.tool-versions.outputs.ruby-string || '' }}
     - name: Run pre-push hooks.
       run: |
         git remote set-head origin --auto # for commitizen-branch hook
