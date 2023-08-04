@@ -65,7 +65,7 @@ runs:
       with:
         ruby-version: ${{ steps.tool-versions.outputs.ruby }}
     - name: Install asdf.
-      uses: asdf-vm/actions/setup@v2.1.0
+      uses: asdf-vm/actions/setup@v2.2.0
       with:
         asdf_branch: v0.11.3
     - name: Cache asdf and asdf-managed tools.
@@ -79,7 +79,7 @@ runs:
           }}
     - name: Install asdf-managed tools based on .tool-versions.
       if: steps.asdf-cache.outputs.cache-hit != 'true'
-      uses: asdf-vm/actions/install@v2.1.0
+      uses: asdf-vm/actions/install@v2.2.0
     - name: Restore .tool-versions.
       run: git restore .tool-versions
       shell: bash
