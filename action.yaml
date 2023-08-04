@@ -56,7 +56,7 @@ runs:
       with:
         node-version: ${{ steps.tool-versions.outputs.nodejs }}
     - name: Set up Python at version specified in .tool-versions.
-      uses: actions/setup-python@v4.6.1
+      uses: actions/setup-python@v4.7.0
       with:
         python-version: ${{ steps.tool-versions.outputs.python }}
     - name: Set up Ruby at version specified in .tool-versions.
