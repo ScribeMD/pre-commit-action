@@ -10,7 +10,7 @@ build-backend = "poetry.core.masonry.api"
 
   [tool.poetry]
   name = "pre-commit-action"
-  version = "0.9.98"
+  version = "0.9.99"
   description = "Optimized GitHub Action for Running pre-commit Hooks"
   authors = ["Kurt von Laven <kurt.von.laven@gmail.com>"]
   license = "MIT"
