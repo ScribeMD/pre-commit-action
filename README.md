@@ -75,7 +75,7 @@ in `.pre-commit-config.yaml`.
 
 default: `true`
 
-If `"true"`, run
+If `true`, run
 [commitizen-action](https://github.com/commitizen-tools/commitizen-action/) on
 push to `main` to commit a version bump and tag a release if there are any
 release-worthy changes. Uses your
