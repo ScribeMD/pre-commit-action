@@ -52,7 +52,7 @@ runs:
       with:
         dotnet-version: ${{ steps.tool-versions.outputs.dotnet-core }}
     - name: Set up Node.js at the version specified in .tool-versions.
-      uses: actions/setup-node@v3.8.1
+      uses: actions/setup-node@v4.0.0
       with:
         node-version: ${{ steps.tool-versions.outputs.nodejs }}
     - name: Set up Python at the version specified in .tool-versions.
